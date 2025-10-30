@@ -50,11 +50,6 @@ require("catppuccin").setup {
 vim.cmd("colorscheme catppuccin")
 vim.cmd(":hi statusline guibg=NONE")
 
--- treesitter setup
-require "nvim-treesitter.configs".setup({
-    ensure_installed = { "lua", "typescript", "javascript", "python", "go", "json", "c", "nix", "yaml" }
-})
-
 --lsp config
 vim.lsp.enable({ "lua_ls", "pylsp", "ruff", "ts_ls", "gopls", "nixd", "jsonls", "cssls", "html", "clangd", "yamlls" })
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
