@@ -15,14 +15,14 @@ vim.o.termguicolors = true
 vim.o.winborder = "single"
 
 -- plugin install
-vim.pack.add({
-    { name = "catppuccin",           src = "https://github.com/catppuccin/nvim" },
-    { name = "mini.pairs",           src = "https://github.com/echasnovski/mini.pairs" },
-    { name = "undotree",             src = "https://github.com/jiaoshijie/undotree" },
-    { name = "snacks",               src = "https://github.com/folke/snacks.nvim" },
-    { name = "render-markdown.nvim", src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
-    { name = "nvim-treesitter",      src = "https://github.com/nvim-treesitter/nvim-treesitter" },
-})
+-- vim.pack.add({
+--     { name = "catppuccin",           src = "https://github.com/catppuccin/nvim" },
+--     { name = "mini.pairs",           src = "https://github.com/echasnovski/mini.pairs" },
+--     { name = "undotree",             src = "https://github.com/jiaoshijie/undotree" },
+--     { name = "snacks",               src = "https://github.com/folke/snacks.nvim" },
+--     { name = "render-markdown.nvim", src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
+--     { name = "nvim-treesitter",      src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+-- })
 
 -- asthetics
 require("catppuccin").setup {
