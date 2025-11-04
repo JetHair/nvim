@@ -1,20 +1,38 @@
+-- Set <space> as the leader key
+-- See `:help mapleader`
+--  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-vim.o.hlsearch = true
-vim.o.scrolloff = 10
+
+-- Make line numbers and relative numberline default
 vim.o.number = true
+vim.o.relativenumber = true
+
+-- Highlight search
+vim.o.hlsearch = true
+
+-- Minimal number of screen lines to keep above and below the cursor.
+vim.o.scrolloff = 10
+
+--Sane indentation
 vim.o.expandtab = true
 vim.o.smartindent = true
 vim.o.autoindent = true
+
+-- Set tab spaces to 4
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
+
+-- Saves undo files
 vim.o.undofile = true
-vim.o.relativenumber = true
 vim.o.termguicolors = true
+
+-- Set window border to single. Opts are: bold, double, none, rounded, shadow, single, solid
 vim.o.winborder = "single"
 
--- plugin install
+-- Install plugin via vim.pack if not installed via nix
+-- NOTE: Need to be nvim version >0.12
 -- vim.pack.add({
 --     { name = "catppuccin",           src = "https://github.com/catppuccin/nvim" },
 --     { name = "mini.pairs",           src = "https://github.com/echasnovski/mini.pairs" },
@@ -26,9 +44,9 @@ vim.o.winborder = "single"
 
 -- asthetics
 require("catppuccin").setup {
-    flavour = "mocha", -- latte, frappe, macchiato, mocha
+    flavour = "mocha",  -- latte, frappe, macchiato, mocha
     transparent_background = false,
-    color_overrides = {
+    color_overrides = { -- Overrode the color to be more dark
         mocha        = {
             base = "#000000",
             mantle = "#000000",
@@ -47,20 +65,58 @@ require("catppuccin").setup {
         }
     }
 }
+
+
+-- Load the colorscheme here.
 vim.cmd("colorscheme catppuccin")
 vim.cmd(":hi statusline guibg=NONE")
 
---lsp config
+--**What is LSP?**
+--
+-- LSP is an initialism you've probably heard, but might not understand what it is.
+--
+-- LSP stands for Language Server Protocol. It's a protocol that helps editors
+-- and language tooling communicate in a standardized fashion.
+--
+-- In general, you have a "server" which is some tool built to understand a particular
+-- language (such as `gopls`, `lua_ls`, `rust_analyzer`, etc.). These Language Servers
+-- (sometimes called LSP servers, but that's kind of like ATM Machine) are standalone
+-- processes that communicate with some "client" - in this case, Neovim!
+--
+-- LSP provides Neovim with features like:
+--  - Go to definition
+--  - Find references
+--  - Autocompletion
+--  - Symbol Search
+--  - and more!
+--
+-- Thus, Language Servers are external tools that must be installed separately from
+-- Neovim. In our case it is installed using nix.
+--
+-- If you're wondering about lsp vs treesitter, you can check out the wonderfully
+-- and elegantly composed help section, `:help lsp-vs-treesitter`
+-- LSP you want to enable by default, all LSP config lives in /lsp directory.
 vim.lsp.enable({ "lua_ls", "pylsp", "ruff", "ts_ls", "gopls", "nixd", "jsonls", "cssls", "html", "clangd", "yamlls" })
-vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
+
+-- Rename the variable under your cursor.
+-- Most Language Servers support renaming across files, etc.
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
+
+-- Format the code in the current buffer
+vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
+
+-- Toggle Diagonostics
 vim.api.nvim_create_user_command('DiagnosticsToggleVirtualText', function()
     local current = vim.diagnostic.config().virtual_text
     vim.diagnostic.config({ virtual_text = not current })
 end, {})
 vim.keymap.set('n', '<Leader>ld', ':DiagnosticsToggleVirtualText<CR>', { noremap = true, silent = true })
 
---  omnicomplete
+-- Complition using nvim builtin Complition engine
+-- It does not open automatically. Press <c-l> to invoke.
+-- Mappings:
+-- <c-n>/<c-p> or <up>/<down>: Select next/previous item
+-- <c-l>: Open complition menu
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(ev)
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
@@ -72,12 +128,21 @@ vim.api.nvim_create_autocmd("LspAttach", {
 vim.keymap.set('i', '<C-l>', '<C-x><C-o>', { noremap = true, silent = true })
 vim.opt.completeopt = { "menu", "menuone", "noselect", "fuzzy", "noinsert" }
 
--- system clipboard remap
+-- Mappings:
+-- <leader>y: Copy selected text to system keyboard
+-- <leader>yy: Copy line below curosr to system keyboard
+-- <leader>p: Pate form system keyboard
 vim.keymap.set({ "v", "x", "n" }, '<leader>y', '"+y', { noremap = true, silent = true })
 vim.keymap.set({ "n", "v", "x" }, '<leader>Y', '"+yy', { noremap = true, silent = true })
 vim.keymap.set({ 'n', 'v', 'x' }, '<leader>p', '"+p', { noremap = true, silent = true })
 
--- mini setup
+-- Mini-Files is a Neovim plugin to browse the file system
+-- You can edit your filesystem like a buffer and perform cross-directory actions.
+-- It is part of mini plugins family. You can edit the file system like any nvim buffer.
+-- Mappings:
+-- <leader>.: Open Mini.Files
+--
+-- For more see `:help mini.files`
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 require('mini.files').setup()
@@ -91,24 +156,37 @@ vim.keymap.set('n', '<leader>.', function()
 end)
 require('mini.pairs').setup({})
 
--- snacks setup
+-- Fuzzy Finder (files, lsp, etc)
+-- Snacks.picker is similar to Telescope but more faster and supports image view
 require('snacks').setup({
     picker = { enabled = true },
 })
-vim.keymap.set('n', '<leader>sg', function() Snacks.picker.grep() end,
-    { noremap = true, silent = true, desc = "Grep Live" })
-vim.keymap.set('n', '<leader>sf', function() Snacks.picker.files() end,
-    { noremap = true, silent = true, desc = "Find Files" })
-vim.keymap.set('n', '<leader>sh', function() Snacks.picker.help() end,
-    { noremap = true, silent = true, desc = "Help Tags" })
-vim.keymap.set('n', '<leader><leader>', function() Snacks.picker.buffers() end,
-    { noremap = true, silent = true, desc = "Buffers" })
+local picker = require 'snacks.picker'
+vim.keymap.set('n', '<leader>sh', function() picker.help() end, { desc = '[S]earch [H]elp' })
+vim.keymap.set('n', '<leader>sk', function() picker.keymaps() end, { desc = '[S]earch [K]eymaps' })
+vim.keymap.set('n', '<leader>sf', function() picker.files() end, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>ss', function() picker.pickers() end, { desc = '[S]earch [S]elect Snacks' })
+vim.keymap.set('n', '<leader>sw', function() picker.grep_word() end, { desc = '[S]earch current [W]ord' })
+vim.keymap.set('n', '<leader>sg', function() picker.grep() end, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sd', function() picker.diagnostics() end, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>sr', function() picker.resume() end, { desc = '[S]earch [R]esume' })
+vim.keymap.set('n', '<leader>s.', function() picker.recent() end, { desc = '[S]earch Recent Files ("." for repeat)' })
+vim.keymap.set('n', '<leader><leader>', function() picker.buffers() end, { desc = '[ ] Find existing buffers' })
 
--- other keymap
+-- Fuzzy search in current buffer
+vim.keymap.set('n', '<leader>/', function()
+    picker.lines()
+end, { desc = '[/] Fuzzily search in current buffer' })
+vim.keymap.set('n', '<leader>s/', function()
+    picker.grep_buffers({ prompt_title = 'Live Grep in Open Buffers' })
+end, { desc = '[S]earch [/] in Open Files' })
+
+-- Clear highlights on search when pressing <Esc> in normal mode
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+-- Visualize, browse and switch between different undo branches.
 vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
 
--- highlight on yank
+-- Highlight when yanking (copying) text
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function()

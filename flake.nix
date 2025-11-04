@@ -4,9 +4,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-    };
+    # neovim-nightly-overlay = {
+    #   url = "github:nix-community/neovim-nightly-overlay";
+    # };
   };
 
   # see :help nixCats.flake.outputs
@@ -102,15 +102,6 @@
             colorscheme = [
               catppuccin-nvim
             ];
-            debug = [
-              nvim-dap
-              nvim-dap-ui
-              nvim-dap-go
-              nvim-nio
-            ];
-            lint = [
-              nvim-lint
-            ];
             pair = [
               mini-pairs
             ];
@@ -120,7 +111,6 @@
           # variable available to nvim runtime
           sharedLibraries = {
             general = with pkgs; [
-              # libgit2
             ];
           };
 
@@ -129,7 +119,7 @@
           # at RUN TIME for plugins. Will be available to path within neovim terminal
           environmentVariables = {
             test = {
-              CATTESTVAR = "It worked!";
+              DOESITWORK = "It works!";
             };
           };
 
@@ -138,7 +128,7 @@
           # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
           extraWrapperArgs = {
             test = [
-              ''--set CATTESTVAR2 "It worked again!"''
+              ''--set DOESITTHO "It worked again!"''
             ];
           };
 
@@ -179,8 +169,8 @@
               wrapRc = true;
               # IMPORTANT:
               # your alias may not conflict with your other packages.
-              aliases = [ "vim" ];
-              neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+              aliases = [ "vi" ];
+              # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
               hosts.python3.enable = true;
               hosts.node.enable = true;
             };
@@ -189,18 +179,10 @@
             categories = {
               general = true;
               lsp = true;
-              gitPlugins = true;
-              customPlugins = true;
               test = true;
               colorscheme = true;
               pair = true;
-              debug = true;
-              lint = true;
-
-              # this kickstart extra didnt require any extra plugins
-              # so it doesnt have a category above.
-              # but we can still send the info from nix to lua that we want it!
-              kickstart-gitsigns = true;
+              debug = false;
 
               # we can pass whatever we want actually.
               have_nerd_font = false;
