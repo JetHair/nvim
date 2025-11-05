@@ -93,7 +93,8 @@
           # This is for plugins that will load at startup without using packadd:
           startupPlugins = with pkgs.vimPlugins; {
             general = [
-              mini-files
+              oil-nvim
+              ultimate-autopair-nvim
               undotree
               snacks-nvim
               render-markdown-nvim
@@ -101,9 +102,6 @@
             ];
             colorscheme = [
               catppuccin-nvim
-            ];
-            pair = [
-              mini-pairs
             ];
           };
 
@@ -181,7 +179,6 @@
               lsp = true;
               test = true;
               colorscheme = true;
-              pair = true;
               debug = false;
 
               # we can pass whatever we want actually.

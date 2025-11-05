@@ -136,25 +136,20 @@ vim.keymap.set({ "v", "x", "n" }, '<leader>y', '"+y', { noremap = true, silent =
 vim.keymap.set({ "n", "v", "x" }, '<leader>Y', '"+yy', { noremap = true, silent = true })
 vim.keymap.set({ 'n', 'v', 'x' }, '<leader>p', '"+p', { noremap = true, silent = true })
 
--- Mini-Files is a Neovim plugin to browse the file system
+-- Oil is a Neovim plugin to browse the file system
 -- You can edit your filesystem like a buffer and perform cross-directory actions.
--- It is part of mini plugins family. You can edit the file system like any nvim buffer.
+-- You can edit the file system like any nvim buffer.
 -- Mappings:
--- <leader>.: Open Mini.Files
+-- <leader>.: Open Oil
 --
--- For more see `:help mini.files`
+-- For more see `:help Oil`
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-require('mini.files').setup()
-require('mini.files').setup({
-    options = {
-        use_as_default_explorer = true,
-    }
+require("oil").setup({
+    default_file_explorer = true,
 })
-vim.keymap.set('n', '<leader>.', function()
-    require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
-end)
-require('mini.pairs').setup({})
+vim.keymap.set("n", '<leader>.', "<CMD>Oil<CR>", { desc = "Open parent directory" })
+require('ultimate-autopair').setup({})
 
 -- Fuzzy Finder (files, lsp, etc)
 -- Snacks.picker is similar to Telescope but more faster and supports image view
