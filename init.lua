@@ -35,7 +35,6 @@ vim.o.winborder = "single"
 -- NOTE: Need to be nvim version >0.12
 -- vim.pack.add({
 --     { name = "catppuccin",           src = "https://github.com/catppuccin/nvim" },
---     { name = "mini.pairs",           src = "https://github.com/echasnovski/mini.pairs" },
 --     { name = "undotree",             src = "https://github.com/jiaoshijie/undotree" },
 --     { name = "snacks",               src = "https://github.com/folke/snacks.nvim" },
 --     { name = "render-markdown.nvim", src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
@@ -136,6 +135,14 @@ vim.keymap.set({ "v", "x", "n" }, '<leader>y', '"+y', { noremap = true, silent =
 vim.keymap.set({ "n", "v", "x" }, '<leader>Y', '"+yy', { noremap = true, silent = true })
 vim.keymap.set({ 'n', 'v', 'x' }, '<leader>p', '"+p', { noremap = true, silent = true })
 
+
+vim.keymap.set('n', '<M-h>', require('smart-splits').move_cursor_left)
+vim.keymap.set('n', '<M-j>', require('smart-splits').move_cursor_down)
+vim.keymap.set('n', '<M-k>', require('smart-splits').move_cursor_up)
+vim.keymap.set('n', '<M-l>', require('smart-splits').move_cursor_right)
+vim.keymap.set('n', '<M-\\>', require('smart-splits').move_cursor_previous)
+
+
 -- Oil is a Neovim plugin to browse the file system
 -- You can edit your filesystem like a buffer and perform cross-directory actions.
 -- You can edit the file system like any nvim buffer.
@@ -149,12 +156,20 @@ require("oil").setup({
     default_file_explorer = true,
 })
 vim.keymap.set("n", '<leader>.', "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
+-- Auto pair `()`, `{}`, etc
 require('ultimate-autopair').setup({})
 
 -- Fuzzy Finder (files, lsp, etc)
 -- Snacks.picker is similar to Telescope but more faster and supports image view
 require('snacks').setup({
     picker = { enabled = true },
+    notifier = {
+        enabled = true,
+        timeout = 3000,
+    },
+    image = { enabled = true },
+    scope = { enabled = true },
 })
 local picker = require 'snacks.picker'
 vim.keymap.set('n', '<leader>sh', function() picker.help() end, { desc = '[S]earch [H]elp' })

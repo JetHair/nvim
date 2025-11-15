@@ -4,9 +4,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
-    # neovim-nightly-overlay = {
-    #   url = "github:nix-community/neovim-nightly-overlay";
-    # };
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+    };
   };
 
   # see :help nixCats.flake.outputs
@@ -94,6 +94,7 @@
           startupPlugins = with pkgs.vimPlugins; {
             general = [
               oil-nvim
+              smart-splits-nvim
               ultimate-autopair-nvim
               undotree
               snacks-nvim
@@ -126,7 +127,7 @@
           # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
           extraWrapperArgs = {
             test = [
-              ''--set DOESITTHO "It worked again!"''
+              ''--set DOESITTHO "It does!"''
             ];
           };
 
@@ -168,7 +169,7 @@
               # IMPORTANT:
               # your alias may not conflict with your other packages.
               aliases = [ "vi" ];
-              # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+              neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
               hosts.python3.enable = true;
               hosts.node.enable = true;
             };
@@ -179,7 +180,6 @@
               lsp = true;
               test = true;
               colorscheme = true;
-              debug = false;
 
               # we can pass whatever we want actually.
               have_nerd_font = false;
