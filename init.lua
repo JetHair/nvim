@@ -41,33 +41,7 @@ vim.o.winborder = "single"
 --     { name = "nvim-treesitter",      src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 -- })
 
--- asthetics
-require("catppuccin").setup {
-    flavour = "mocha",  -- latte, frappe, macchiato, mocha
-    transparent_background = false,
-    color_overrides = { -- Overrode the color to be more dark
-        mocha        = {
-            base = "#000000",
-            mantle = "#000000",
-            crust = "#000000",
-        },
-        integrations = {
-            mini = {
-                enabled = true,
-            },
-            nvimtree = true,
-            snacks = {
-                enabled = true,
-                indent_scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
-            },
-            render_markdown = true,
-        }
-    }
-}
-
-
--- Load the colorscheme here.
-vim.cmd("colorscheme catppuccin")
+vim.cmd("colorscheme compline")
 vim.cmd(":hi statusline guibg=NONE")
 
 --**What is LSP?**
