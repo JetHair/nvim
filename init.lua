@@ -33,13 +33,16 @@ vim.o.winborder = "single"
 
 -- Install plugin via vim.pack if not installed via nix
 -- NOTE: Need to be nvim version >0.12
--- vim.pack.add({
---     { name = "catppuccin",           src = "https://github.com/catppuccin/nvim" },
---     { name = "undotree",             src = "https://github.com/jiaoshijie/undotree" },
---     { name = "snacks",               src = "https://github.com/folke/snacks.nvim" },
---     { name = "render-markdown.nvim", src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
---     { name = "nvim-treesitter",      src = "https://github.com/nvim-treesitter/nvim-treesitter" },
--- })
+vim.pack.add({
+    { name = "undotree",             src = "https://github.com/jiaoshijie/undotree" },
+    { name = "smart-splits",         src = "https://github.com/mrjones2014/smart-splits.nvim" },
+    { name = "snacks",               src = "https://github.com/folke/snacks.nvim" },
+    { name = "oil",                  src = "https://github.com/stevearc/oil.nvim" },
+    { name = "ultimate-autopair",    src = "https://github.com/altermo/ultimate-autopair.nvim/" },
+    { name = "snacks",               src = "https://github.com/folke/snacks.nvim" },
+    { name = "render-markdown.nvim", src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
+    { name = "nvim-treesitter",      src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+})
 
 vim.cmd("colorscheme compline")
 vim.cmd(":hi statusline guibg=NONE")
@@ -108,7 +111,6 @@ vim.opt.completeopt = { "menu", "menuone", "noselect", "fuzzy", "noinsert" }
 vim.keymap.set({ "v", "x", "n" }, '<leader>y', '"+y', { noremap = true, silent = true })
 vim.keymap.set({ "n", "v", "x" }, '<leader>Y', '"+yy', { noremap = true, silent = true })
 vim.keymap.set({ 'n', 'v', 'x' }, '<leader>p', '"+p', { noremap = true, silent = true })
-
 
 vim.keymap.set('n', '<M-h>', require('smart-splits').move_cursor_left)
 vim.keymap.set('n', '<M-j>', require('smart-splits').move_cursor_down)

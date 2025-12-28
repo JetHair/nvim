@@ -88,21 +88,31 @@
               clang-tools
               bash-language-server
             ];
+            language = [
+              lua
+              nix
+              python3
+              nodejs
+              go
+              gcc
+              bash
+
+            ];
           };
 
           # This is for plugins that will load at startup without using packadd:
           startupPlugins = with pkgs.vimPlugins; {
             general = [
-              oil-nvim
-              smart-splits-nvim
-              ultimate-autopair-nvim
-              undotree
-              snacks-nvim
-              render-markdown-nvim
-              nvim-treesitter.withAllGrammars
+              # oil-nvim
+              # smart-splits-nvim
+              # ultimate-autopair-nvim
+              # undotree
+              # snacks-nvim
+              # render-markdown-nvim
+              # nvim-treesitter.withAllGrammars
             ];
             colorscheme = [
-              catppuccin-nvim
+              # catppuccin-nvim
             ];
           };
 
