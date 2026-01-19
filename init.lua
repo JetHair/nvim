@@ -32,9 +32,9 @@ vim.o.winborder = "single"
 -- Install plugin via vim.pack if not installed via nix
 -- NOTE: Need to be nvim version >0.12
 vim.pack.add({
-    { name = "undotree",             src = "https://github.com/jiaoshijie/undotree" },
-    { name = "smart-splits",         src = "https://github.com/mrjones2014/smart-splits.nvim" },
-    { name = "nvim-treesitter",      src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+    { name = "undotree",        src = "https://github.com/jiaoshijie/undotree" },
+    { name = "smart-splits",    src = "https://github.com/mrjones2014/smart-splits.nvim" },
+    { name = "nvim-treesitter", src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 })
 
 vim.cmd("colorscheme compline")
@@ -47,17 +47,18 @@ vim.lsp.enable({ "lua_ls", "pylsp", "ruff", "ts_ls", "gopls", "nixd", "jsonls", 
     "tinymist" })
 
 -- Rename the variable under your cursor.
-keymap('n', '<leader>rn', vim.lsp.buf.rename)
+keymap('n', '<leader>lr', vim.lsp.buf.rename, { desc = "[r]ename" })
 
 -- Format the code in the current buffer
-keymap('n', '<leader>lf', vim.lsp.buf.format)
+keymap('n', '<leader>lf', vim.lsp.buf.format, { desc = "[f]ormat buffer" })
 
 -- Toggle Diagonostics
 vim.api.nvim_create_user_command('DiagnosticsToggleVirtualText', function()
     local current = vim.diagnostic.config().virtual_text
     vim.diagnostic.config({ virtual_text = not current })
 end, {})
-keymap('n', '<Leader>ld', ':DiagnosticsToggleVirtualText<CR>', { noremap = true, silent = true })
+keymap('n', '<Leader>ld', ':DiagnosticsToggleVirtualText<CR>',
+    { noremap = true, silent = true, desc = "[d]iagnostics Toggle" })
 
 -- Complition using nvim builtin Complition engine
 -- It does not open automatically. Press <c-l> to invoke.
@@ -74,7 +75,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 keymap('i', '<C-l>', '<C-x><C-o>', { noremap = true, silent = true })
 vim.opt.completeopt = { "menu", "menuone", "noselect", "fuzzy", "noinsert" }
-
 
 -- <leader>y: Copy selected text to system keyboard
 -- <leader>yy: Copy line below curosr to system keyboard
@@ -94,7 +94,7 @@ keymap('n', '<M-\\>', require('smart-splits').move_cursor_previous, { desc = "[M
 -- Clear highlights on search when pressing <Esc> in normal mode
 keymap('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Visualize, browse and switch between different undo branches.
-keymap('n', '<leader>u', vim.cmd.UndotreeToggle)
+keymap('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = "[u]ndotree Toggle" })
 
 -- Highlight when yanking (copying) text
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })

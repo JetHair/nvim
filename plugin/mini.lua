@@ -112,7 +112,7 @@ require("mini.pick").setup({
 })
 vim.ui.select = MiniPick.ui_select
 local pick = require('mini.pick')
-local picker = require('mini.extra').pickers.
+local picker = require('mini.extra').pickers
 keymap("n", "<leader>fh", function() pick.builtin.help() end,
     { desc = '[F]ind [h]elp' })
 keymap("n", "<leader>ff", function() pick.builtin.files() end,
