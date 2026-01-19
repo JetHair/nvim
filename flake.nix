@@ -87,6 +87,7 @@
               vscode-langservers-extracted
               clang-tools
               bash-language-server
+              tinymist
             ];
             language = [
               lua
@@ -96,6 +97,7 @@
               go
               gcc
               bash
+              typst
 
             ];
           };
