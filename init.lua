@@ -43,8 +43,21 @@ vim.cmd(":hi statusline guibg=NONE")
 local keymap = vim.keymap.set
 
 -- LSP you want to enable by default, all LSP config lives in /lsp directory.
-vim.lsp.enable({ "lua_ls", "pylsp", "ruff", "ts_ls", "gopls", "nixd", "jsonls", "cssls", "html", "clangd", "yamlls",
-    "tinymist" })
+vim.lsp.enable({
+    'lua_ls',
+    -- 'hls',
+    'pylsp',
+    'ruff',
+    'ts_ls',
+    'gopls',
+    'nixd',
+    'jsonls',
+    'cssls',
+    'html',
+    'clangd',
+    'yamlls',
+    'tinymist',
+})
 
 -- Rename the variable under your cursor.
 keymap('n', '<leader>lr', vim.lsp.buf.rename, { desc = "[r]ename" })

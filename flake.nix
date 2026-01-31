@@ -88,6 +88,7 @@
               clang-tools
               bash-language-server
               tinymist
+              haskell-language-server
             ];
             language = [
               lua
@@ -96,6 +97,7 @@
               nodejs
               go
               gcc
+              ghc
               bash
               typst
 
@@ -192,6 +194,7 @@
               lsp = true;
               test = true;
               colorscheme = true;
+              language = true;
 
               # we can pass whatever we want actually.
               have_nerd_font = false;
@@ -246,7 +249,7 @@
             name = defaultPackageName;
             packages = [ defaultPackage ];
             inputsFrom = [ ];
-            shellHook = '''';
+            shellHook = "";
           };
         };
 
