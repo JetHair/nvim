@@ -89,6 +89,8 @@
               bash-language-server
               tinymist
               haskell-language-server
+              harper
+              ltex-ls-plus
             ];
             language = [
               lua

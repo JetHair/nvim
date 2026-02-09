@@ -57,10 +57,14 @@ vim.lsp.enable({
     'clangd',
     'yamlls',
     'tinymist',
+    'harper_ls',
+    'ltex_plus'
 })
 
 -- Rename the variable under your cursor.
 keymap('n', '<leader>lr', vim.lsp.buf.rename, { desc = "[r]ename" })
+vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { desc = "Code action" })
+
 
 -- Format the code in the current buffer
 keymap('n', '<leader>lf', vim.lsp.buf.format, { desc = "[f]ormat buffer" })
