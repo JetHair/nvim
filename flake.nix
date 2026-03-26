@@ -102,7 +102,9 @@
               ghc
               bash
               typst
-
+            ];
+            tools = [
+              typst-live
             ];
           };
 
@@ -196,6 +198,7 @@
               lsp = true;
               test = true;
               colorscheme = true;
+              tools = true;
               language = true;
 
               # we can pass whatever we want actually.
